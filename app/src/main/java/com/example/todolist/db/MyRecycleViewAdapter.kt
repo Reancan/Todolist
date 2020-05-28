@@ -1,6 +1,7 @@
 package com.example.todolist.db
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,9 @@ import com.example.todolist.databinding.ListItemBinding
 import com.example.todolist.db.Subscriber
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class MyRecycleViewAdapter(private val subscriberList: List<Subscriber>): RecyclerView.Adapter<MyviewHolder>()
+class MyRecycleViewAdapter(private val subscriberList: List<Subscriber>
+                           ,private val clickListener:(Subscriber)->Unit)
+    : RecyclerView.Adapter<MyviewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyviewHolder {
     val layoutInflater:LayoutInflater = LayoutInflater.from(parent.context)
@@ -24,14 +27,18 @@ class MyRecycleViewAdapter(private val subscriberList: List<Subscriber>): Recycl
     }
 
     override fun onBindViewHolder(holder: MyviewHolder, position: Int) {
-    holder.bind(subscriberList[position])
+    holder.bind(subscriberList[position],clickListener)
     }
 
 }
 
 class MyviewHolder(val binding: ListItemBinding):RecyclerView.ViewHolder(binding.root){
-    fun bind(subscriber: Subscriber){
+    fun bind(subscriber: Subscriber,clickListener:(Subscriber)->Unit){
         binding.nameTextView.text = subscriber.name
         binding.emailTextView.text = subscriber.email
+        binding. listItemLayout.setOnClickListener {
+        clickListener(subscriber)
+
+        }
     }
 }

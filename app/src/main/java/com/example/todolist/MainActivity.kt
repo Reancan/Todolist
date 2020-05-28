@@ -3,15 +3,13 @@ package com.example.todolist
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.databinding.ActivityMainBinding
-import com.example.todolist.db.MyRecycleViewAdapter
-import com.example.todolist.db.SubscriberDAO
-import com.example.todolist.db.SubscriberDatabase
-import com.example.todolist.db.SubscriberRepository
+import com.example.todolist.db.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,9 +38,12 @@ class MainActivity : AppCompatActivity() {
     private  fun displaySubscribersList(){
        subscriberViewModel.subscribers.observe(this, Observer {
            Log.i("MYTAG", it.toString())
-       binding.subscriberRecyclerView.adapter = MyRecycleViewAdapter(it)
+       binding.subscriberRecyclerView.adapter = MyRecycleViewAdapter(it,{selectedItem:Subscriber->listItemClicked(selectedItem)})
 
        })
+    }
+    private fun listItemClicked(subscriber: Subscriber){
+        Toast.makeText(this,"selected name is ${subscriber.name}", Toast.LENGTH_LONG).show()
     }
 
 }
