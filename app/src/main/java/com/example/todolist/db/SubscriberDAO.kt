@@ -9,7 +9,7 @@ interface SubscriberDAO {
     suspend fun insertSubscriber(subscriber:Subscriber): Long
 
     @Update
-    suspend fun updateSubcsriber(subscriber: Subscriber)
+    suspend fun updateSubcsriber(subscriber: Subscriber):Int
 
     @Delete
     suspend fun deleteSubscriber(subscriber: Subscriber)
