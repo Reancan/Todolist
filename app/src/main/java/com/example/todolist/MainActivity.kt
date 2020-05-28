@@ -10,8 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.db.*
+import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.list_item.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var subscriberViewModel: SubscriberViewModel
@@ -40,6 +46,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+
+
+
     private fun initRecyclerView(){
         binding.subscriberRecyclerView.layoutManager = LinearLayoutManager(this)
        adapter  = MyRecycleViewAdapter({selectedItem:Subscriber->listItemClicked(selectedItem)})
@@ -60,5 +70,8 @@ class MainActivity : AppCompatActivity() {
 
         subscriberViewModel.initUpdateAndDelete(subscriber)
     }
+
+
+
 
 }
