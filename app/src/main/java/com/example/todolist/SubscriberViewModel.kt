@@ -1,5 +1,6 @@
 package com.example.todolist
 
+import android.util.Patterns
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
@@ -43,17 +44,26 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
 
     fun saveOrUpdate(){
 
-        if(isUpdateOrDelete){
-            subscriberToUpdateOrDelete.name = inputName.value!!
-            subscriberToUpdateOrDelete.email = inputEmail.value!!
-            update(subscriberToUpdateOrDelete)
-        }else {
-            val name = inputName.value!!
-            val email = inputEmail.value!!
-            insert(Subscriber(id = 0, name = name, email = email))
-            inputName.value = null
-            inputEmail.value = null
+        if(inputName.value==null) {
+            statusMessage.value = Event("Please enter subscriber's Title")
+        }else if(inputEmail.value==null){
+            statusMessage.value = Event("Please enter subscriber's Kegiatan")
+        }else if(Patterns.EMAIL_ADDRESS.matcher(inputEmail.value!!).matches()){
+            statusMessage.value = Event(" Please enter a correct Kegiatannya")
+        }else{
+            if(isUpdateOrDelete){
+                subscriberToUpdateOrDelete.name = inputName.value!!
+                subscriberToUpdateOrDelete.email = inputEmail.value!!
+                update(subscriberToUpdateOrDelete)
+            }else {
+                val name = inputName.value!!
+                val email = inputEmail.value!!
+                insert(Subscriber(id = 0, name = name, email = email))
+                inputName.value = null
+                inputEmail.value = null
+            }
         }
+        
     }
 
     fun clearAllOrDelete(){
