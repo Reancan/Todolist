@@ -11,10 +11,11 @@ import com.example.todolist.databinding.ListItemBinding
 import com.example.todolist.db.Subscriber
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class MyRecycleViewAdapter(private val subscriberList: List<Subscriber>
-                           ,private val clickListener:(Subscriber)->Unit)
+class MyRecycleViewAdapter(private val clickListener:(Subscriber)->Unit)
     : RecyclerView.Adapter<MyviewHolder>()
 {
+    private val subscriberList = ArrayList<Subscriber>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyviewHolder {
     val layoutInflater:LayoutInflater = LayoutInflater.from(parent.context)
         val binding :ListItemBinding =
@@ -28,6 +29,11 @@ class MyRecycleViewAdapter(private val subscriberList: List<Subscriber>
 
     override fun onBindViewHolder(holder: MyviewHolder, position: Int) {
     holder.bind(subscriberList[position],clickListener)
+    }
+
+    fun setList(subscriber: List<Subscriber>){
+        subscriberList.clear()
+       subscriberList.addAll(subscriber)
     }
 
 }

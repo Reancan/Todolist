@@ -63,7 +63,7 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
                 inputEmail.value = null
             }
         }
-        
+
     }
 
     fun clearAllOrDelete(){
