@@ -2,6 +2,7 @@ package com.example.todolist
 
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
+import androidx.lifecycle.LiveData
 import  androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,6 +29,12 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
 
     @Bindable
     val clearAllOrDeleteButtonText = MutableLiveData<String>()
+
+    private val statusMessage = MutableLiveData<Event<String>>()
+
+
+    val message : LiveData<Event<String>>
+    get() = statusMessage
 
     init {
         saveorUpdateBottunText.value = "Save"
@@ -61,6 +68,9 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
 
     fun insert(subscriber: Subscriber):Job = viewModelScope.launch {
         repository.insert(subscriber)
+        
+        statusMessage.value = Event("Subscriber Inserted Successfully")
+
         }
 
     fun update(subscriber: Subscriber):Job = viewModelScope.launch {
@@ -70,6 +80,7 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
         isUpdateOrDelete = false
         saveorUpdateBottunText.value = "Save"
         clearAllOrDeleteButtonText.value = "Clear All"
+        statusMessage.value = Event("Subscriber Updated Successfully")
 
     }
 
@@ -80,10 +91,12 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
         isUpdateOrDelete = false
         saveorUpdateBottunText.value = "Save"
         clearAllOrDeleteButtonText.value = "Clear All"
+        statusMessage.value = Event("Subscriber Deletedd Successfully")
     }
 
     fun clearAll():Job = viewModelScope.launch {
         repository.deleteAll()
+        statusMessage.value = Event("All Subscribers Deleted Successfully")
 
     }
 
